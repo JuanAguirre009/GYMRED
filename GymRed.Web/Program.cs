@@ -1,4 +1,4 @@
-using GymRed.Application.Interfaces;
+using GymRed.Application.Interfaces.Services;
 using GymRed.Application.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

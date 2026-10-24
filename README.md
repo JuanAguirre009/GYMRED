@@ -45,6 +45,7 @@ GymRed.Tests
 ## Fases completadas
 
 - **Fase 1 (Dominio):** entidades, enums, value objects, excepciones de dominio y pruebas unitarias iniciales. Ver `docs/modelo-dominio.md`.
+- **Fase 2 (Aplicaci�n):** DTOs, interfaces de repositorio, servicios de casos de uso, mapeos y reglas de negocio. Ver `docs/capa-aplicacion.md`.
 
 ## Requerimientos funcionales
 
