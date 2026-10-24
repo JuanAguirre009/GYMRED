@@ -73,8 +73,8 @@ public class Cliente : IEntity, IAggregateRoot
         if (plan is null)
             throw new DomainException("El plan es obligatorio para asignar una membres�a.");
 
-        var fechaInicio = DateTime.UtcNow.Date;
-        var membresia = new Membresia(this, plan, fechaInicio);
+        DateTime fechaInicio = DateTime.UtcNow.Date;
+        Membresia membresia = new Membresia(this, plan, fechaInicio);
         _membresias.Add(membresia);
 
         return membresia;

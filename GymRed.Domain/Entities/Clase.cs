@@ -58,7 +58,7 @@ public class Clase : IEntity
 
     public SesionClase ProgramarSesion(DateTime fechaHoraInicio, DateTime fechaHoraFin)
     {
-        var sesion = new SesionClase(Id, CapacidadMaxima, fechaHoraInicio, fechaHoraFin);
+        SesionClase sesion = new SesionClase(Id, CapacidadMaxima, fechaHoraInicio, fechaHoraFin);
         _sesiones.Add(sesion);
         return sesion;
     }

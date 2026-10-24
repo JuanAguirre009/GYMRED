@@ -45,7 +45,7 @@ public class Membresia : IEntity
 
     public bool EstaVigente(DateTime fecha)
     {
-        var fechaConsulta = fecha.Date;
+        DateTime fechaConsulta = fecha.Date;
         return Estado == EstadoMembresia.Activa
             && fechaConsulta >= FechaInicio
             && fechaConsulta <= FechaFin;
@@ -73,7 +73,7 @@ public class Membresia : IEntity
         if (Estado == EstadoMembresia.Cancelada)
             throw new ReglaNegocioException("No se pueden registrar pagos en una membres�a cancelada.");
 
-        var pago = new Pago(Id, monto, metodoPago, numeroTransaccion);
+        Pago pago = new Pago(Id, monto, metodoPago, numeroTransaccion);
         _pagos.Add(pago);
 
         return pago;

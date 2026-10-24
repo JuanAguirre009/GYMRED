@@ -1,14 +1,14 @@
 using GymRed.Application.Interfaces;
 using GymRed.Application.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 // Registro de servicios de aplicaci�n (capa de negocio)
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {

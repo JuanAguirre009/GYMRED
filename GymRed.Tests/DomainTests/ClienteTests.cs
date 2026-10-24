@@ -10,7 +10,7 @@ public class ClienteTests
     [Fact]
     public void Crear_Cliente_Valido_Tiene_Estado_Activo()
     {
-        var cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
+        Cliente cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
 
         Assert.Equal("Juan P�rez", cliente.NombreCompleto);
         Assert.Equal(EstadoCliente.Activo, cliente.Estado);
@@ -30,10 +30,10 @@ public class ClienteTests
     [Fact]
     public void Asignar_Membresia_Agrega_Al_Historial()
     {
-        var cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
-        var plan = new Plan("Mensual", "Acceso ilimitado 30 d�as", 30, new Dinero(100_000), "Acceso a todas las sedes");
+        Cliente cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
+        Plan plan = new Plan("Mensual", "Acceso ilimitado 30 d�as", 30, new Dinero(100_000), "Acceso a todas las sedes");
 
-        var membresia = cliente.AsignarMembresia(plan);
+        Membresia membresia = cliente.AsignarMembresia(plan);
 
         Assert.Single(cliente.Membresias);
         Assert.Equal(plan.Id, membresia.PlanId);
@@ -43,7 +43,7 @@ public class ClienteTests
     [Fact]
     public void Cambiar_Estado_Cliente_Actualiza_Correctamente()
     {
-        var cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
+        Cliente cliente = new Cliente("Juan", "P�rez", "123456", "juan@correo.com", "3001234567", new DateTime(1990, 1, 1), 1);
 
         cliente.CambiarEstado(EstadoCliente.Suspendido);
 

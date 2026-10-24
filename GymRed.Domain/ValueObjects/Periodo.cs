@@ -18,7 +18,7 @@ public sealed class Periodo : IEquatable<Periodo>
 
     public bool Incluye(DateTime fecha)
     {
-        var fechaNormalizada = fecha.Date;
+        DateTime fechaNormalizada = fecha.Date;
         return fechaNormalizada >= FechaInicio && fechaNormalizada <= FechaFin;
     }
 

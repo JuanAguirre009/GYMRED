@@ -9,7 +9,7 @@ public class ReservaTests
     [Fact]
     public void Reserva_Nueva_Tiene_Estado_Activo()
     {
-        var reserva = new Reserva(1, 1);
+        Reserva reserva = new Reserva(1, 1);
 
         Assert.Equal(EstadoReserva.Activa, reserva.Estado);
     }
@@ -17,7 +17,7 @@ public class ReservaTests
     [Fact]
     public void Cancelar_Reserva_Activa_Cambia_Estado()
     {
-        var reserva = new Reserva(1, 1);
+        Reserva reserva = new Reserva(1, 1);
 
         reserva.Cancelar();
 
@@ -27,7 +27,7 @@ public class ReservaTests
     [Fact]
     public void Cancelar_Reserva_Ya_Cancelada_Lanza_Excepcion()
     {
-        var reserva = new Reserva(1, 1);
+        Reserva reserva = new Reserva(1, 1);
         reserva.Cancelar();
 
         Assert.Throws<ReglaNegocioException>(() => reserva.Cancelar());
@@ -36,7 +36,7 @@ public class ReservaTests
     [Fact]
     public void Marcar_Como_Cumplida_Reserva_Cancelada_Lanza_Excepcion()
     {
-        var reserva = new Reserva(1, 1);
+        Reserva reserva = new Reserva(1, 1);
         reserva.Cancelar();
 
         Assert.Throws<ReglaNegocioException>(() => reserva.MarcarComoCumplida());

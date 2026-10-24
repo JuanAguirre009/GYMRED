@@ -10,7 +10,7 @@ public class PagoTests
     [Fact]
     public void Pago_Nuevo_Tiene_Estado_Registrado()
     {
-        var pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo, "TX-001");
+        Pago pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo, "TX-001");
 
         Assert.Equal(EstadoPago.Registrado, pago.Estado);
         Assert.Equal("TX-001", pago.NumeroTransaccion);
@@ -19,7 +19,7 @@ public class PagoTests
     [Fact]
     public void Anular_Pago_Requiere_Motivo()
     {
-        var pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
+        Pago pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
 
         Assert.Throws<DomainException>(() => pago.Anular("   "));
     }
@@ -27,7 +27,7 @@ public class PagoTests
     [Fact]
     public void Anular_Pago_Cambia_Estado_Y_Guarda_Motivo()
     {
-        var pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
+        Pago pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
 
         pago.Anular("Pago duplicado");
 
@@ -38,7 +38,7 @@ public class PagoTests
     [Fact]
     public void Anular_Pago_Dos_Veces_Lanza_Excepcion()
     {
-        var pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
+        Pago pago = new Pago(1, new Dinero(100_000), MetodoPago.Efectivo);
         pago.Anular("Pago duplicado");
 
         Assert.Throws<ReglaNegocioException>(() => pago.Anular("Motivo repetido"));
