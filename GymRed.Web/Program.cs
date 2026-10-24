@@ -2,7 +2,6 @@ using GymRed.Application.Interfaces.Repositories;
 using GymRed.Application.Interfaces.Services;
 using GymRed.Application.Services;
 using GymRed.Infrastructure.Data;
-using GymRed.Infrastructure.Data.Seed;
 using GymRed.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +45,6 @@ using (IServiceScope scope = app.Services.CreateScope())
     IServiceProvider services = scope.ServiceProvider;
     GymRedDbContext context = services.GetRequiredService<GymRedDbContext>();
     await context.Database.MigrateAsync();
-    await DbInitializer.SeedAsync(context);
 }
 
 if (!app.Environment.IsDevelopment())

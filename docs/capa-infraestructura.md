@@ -14,19 +14,17 @@ La capa de infraestructura implementa el acceso a datos y la persistencia. Conec
 GymRed.Infrastructure/
 ├── Data/
 │   ├── GymRedDbContext.cs
-│   ├── Configurations/
-│   │   ├── AsistenciaConfiguration.cs
-│   │   ├── ClaseConfiguration.cs
-│   │   ├── ClienteConfiguration.cs
-│   │   ├── InstructorConfiguration.cs
-│   │   ├── MembresiaConfiguration.cs
-│   │   ├── PagoConfiguration.cs
-│   │   ├── PlanConfiguration.cs
-│   │   ├── ReservaConfiguration.cs
-│   │   ├── SedeConfiguration.cs
-│   │   └── SesionClaseConfiguration.cs
-│   └── Seed/
-│       └── DbInitializer.cs
+│   └── Configurations/
+│       ├── AsistenciaConfiguration.cs
+│       ├── ClaseConfiguration.cs
+│       ├── ClienteConfiguration.cs
+│       ├── InstructorConfiguration.cs
+│       ├── MembresiaConfiguration.cs
+│       ├── PagoConfiguration.cs
+│       ├── PlanConfiguration.cs
+│       ├── ReservaConfiguration.cs
+│       ├── SedeConfiguration.cs
+│       └── SesionClaseConfiguration.cs
 └── Repositories/
     ├── AsistenciaRepository.cs
     ├── ClaseRepository.cs
@@ -80,13 +78,9 @@ Implementan las interfaces definidas en `GymRed.Application.Interfaces.Repositor
 
 ## Seed de datos
 
-`DbInitializer` inserta datos iniciales si las tablas estan vacias:
+El seed de datos no se ejecuta automaticamente desde codigo. Los datos de prueba deben crearse directamente en SQL Server Management Studio (SSMS) mediante el script `docs/seed-ssms.sql`.
 
-- 1 sede: "Sede Principal".
-- 2 instructores: "Carlos Gomez" y "Ana Rodriguez".
-- 2 planes: "Mensual" y "Trimestral".
-- 1 cliente de prueba: "Laura Martinez".
-- 1 clase: "CrossFit".
+Esto permite controlar manualmente los datos iniciales y evita que la aplicacion modifique la base de datos en cada inicio.
 
 ## Registro de dependencias
 
@@ -95,7 +89,8 @@ En `GymRed.Web/Program.cs` se registran:
 - `GymRedDbContext` con SQL Server.
 - Todos los repositorios como `Scoped`.
 - `IUnitOfWork`.
-- Seed automatico al iniciar la aplicacion.
+
+Al iniciar, la aplicacion aplica automaticamente las migraciones pendientes (`MigrateAsync`), pero no inserta datos de prueba.
 
 ## Migraciones
 
@@ -117,9 +112,26 @@ Configurada en `appsettings.json` y `appsettings.Development.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=GymRedDb;Trusted_Connection=True;TrustServerCertificate=True"
+  "DefaultConnection": "Server=localhost;Database=GymRedDb;Integrated Security=True;TrustServerCertificate=True"
 }
 ```
+
+## Versiones y dependencias
+
+| Proyecto | Framework / Paquete | Version |
+|---|---|---|
+| Todos | .NET | 10.0 |
+| GymRed.Infrastructure | Microsoft.EntityFrameworkCore | 10.0.10 |
+| GymRed.Infrastructure | Microsoft.EntityFrameworkCore.SqlServer | 10.0.10 |
+| GymRed.Infrastructure | Microsoft.EntityFrameworkCore.Tools | 10.0.10 |
+| GymRed.Web | Microsoft.EntityFrameworkCore.Design | 10.0.10 |
+| GymRed.Infrastructure/Web/Tests | System.Security.Cryptography.Pkcs | 10.0.13 |
+
+### Parche de seguridad
+
+El paquete transitorio `System.Security.Cryptography.Pkcs` traído por `Microsoft.Data.SqlClient` contenía las vulnerabilidades [GHSA-2fmv-rv2c-59x7](https://github.com/advisories/GHSA-2fmv-rv2c-59x7) y [GHSA-846f-f764-76mx](https://github.com/advisories/GHSA-846f-f764-76mx). Se agregó una referencia directa a la versión parcheada **10.0.13** en `GymRed.Infrastructure`, `GymRed.Web` y `GymRed.Tests`.
+
+La herramienta global `dotnet-ef` también se actualizó a la versión **10.0.10** para coincidir con el runtime de EF Core.
 
 ## Principios SOLID / Clean Code aplicados
 

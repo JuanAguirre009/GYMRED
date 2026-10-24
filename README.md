@@ -70,6 +70,6 @@ GymRed.Tests
 
 - .NET 10
 - ASP.NET Core MVC
-- Entity Framework Core (a configurar en la rama de infraestructura)
+- Entity Framework Core 10
 - xUnit (pruebas)
-- SQL Server / PostgreSQL (a definir)
+- SQL Server
