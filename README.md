@@ -1,16 +1,18 @@
-# GymRed - Sistema de Gestión de Gimnasio
+> **Nota sobre codificaci�n:** los archivos fuente usan UTF-8. Visual Studio y .NET los manejan correctamente.
 
-Proyecto académico para administrar las operaciones de una cadena de gimnasios aplicando arquitectura en capas y patrón MVC.
+# GymRed - Sistema de Gesti�n de Gimnasio
+
+Proyecto ac�demico para administrar las operaciones de una cadena de gimnasios aplicando arquitectura en capas y patr�n MVC.
 
 ## Arquitectura en capas
 
 | Capa | Proyecto | Responsabilidad |
 |------|----------|-----------------|
-| Presentación | `GymRed.Web` | Controladores, vistas, modelos de vista, recepción de solicitudes HTTP. |
-| Aplicación / Negocio | `GymRed.Application` | Casos de uso, servicios, validaciones y coordinación de operaciones. |
-| Dominio | `GymRed.Domain` | Entidades, enums, value objects e interfaces del núcleo del negocio. |
-| Acceso a datos | `GymRed.Infrastructure` | Repositorios, DbContext, persistencia y comunicación con la base de datos. |
-| Pruebas | `GymRed.Tests` | Tests unitarios y de integración por capa. |
+| Presentaci�n | `GymRed.Web` | Controladores, vistas, modelos de vista, recepci�n de solicitudes HTTP. |
+| Aplicaci�n / Negocio | `GymRed.Application` | Casos de uso, servicios, validaciones y coordinaci�n de operaciones. |
+| Dominio | `GymRed.Domain` | Entidades, enums, value objects e interfaces del n�cleo del negocio. |
+| Acceso a datos | `GymRed.Infrastructure` | Repositorios, DbContext, persistencia y comunicaci�n con la base de datos. |
+| Pruebas | `GymRed.Tests` | Tests unitarios y de integraci�n por capa. |
 
 ## Dependencias entre capas
 
@@ -32,32 +34,27 @@ GymRed.Tests
 
 ## Flujo de una solicitud
 
-1. El usuario interactúa con una **Vista**.
-2. La vista envía la solicitud a un **Controlador**.
-3. El controlador delega en un **Servicio** de la capa de aplicación.
+1. El usuario interact�a con una **Vista**.
+2. La vista env�a la solicitud a un **Controlador**.
+3. El controlador delega en un **Servicio** de la capa de aplicaci�n.
 4. El servicio aplica las reglas de negocio y usa el **Dominio**.
 5. El servicio consulta/persiste mediante un **Repositorio** de infraestructura.
 6. El repositorio accede a la **Base de datos**.
 7. La respuesta fluye de regreso hacia el controlador y la vista.
 
-## Estructura de ramas propuesta
+## Fases completadas
 
-- `main`: proyecto base estable.
-- `capa-dominio`: entidades, enums, value objects e interfaces.
-- `capa-aplicacion`: servicios, DTOs y casos de uso.
-- `capa-infraestructura`: DbContext, repositorios y migraciones.
-- `capa-presentacion`: controladores, vistas y modelos de vista.
-- `tests`: pruebas unitarias e integración.
+- **Fase 1 (Dominio):** entidades, enums, value objects, excepciones de dominio y pruebas unitarias iniciales. Ver `docs/modelo-dominio.md`.
 
 ## Requerimientos funcionales
 
-- RF01: Gestión de clientes
-- RF02: Gestión de membresías
-- RF03: Gestión de pagos
-- RF04: Gestión de clases grupales
+- RF01: Gesti�n de clientes
+- RF02: Gesti�n de membres�as
+- RF03: Gesti�n de pagos
+- RF04: Gesti�n de clases grupales
 - RF05: Reservas y asistencia
 
-## Tecnologías
+## Tecnolog�as
 
 - .NET 10
 - ASP.NET Core MVC
