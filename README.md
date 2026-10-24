@@ -56,6 +56,7 @@ GymRed.Tests
 
 - **Fase 1 (Dominio):** entidades, enums, value objects, excepciones de dominio y pruebas unitarias iniciales. Ver `docs/modelo-dominio.md`.
 - **Fase 2 (Aplicacion):** DTOs, interfaces de repositorio, servicios de casos de uso, mapeos y reglas de negocio. Ver `docs/capa-aplicacion.md`.
+- **Fase 3 (Infraestructura):** DbContext, configuraciones EF Core, repositorios concretos, UnitOfWork, migraciones SQL Server y seed de datos. Ver `docs/capa-infraestructura.md`.
 
 ## Requerimientos funcionales
 
