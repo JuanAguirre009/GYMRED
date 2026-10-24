@@ -74,7 +74,7 @@ public class Instructor : IEntity
     private static void ValidarTelefono(string telefono)
     {
         if (string.IsNullOrWhiteSpace(telefono))
-            throw new DomainException("El tel�fono del instructor es obligatorio.");
+            throw new DomainException("El telefono del instructor es obligatorio.");
     }
 
     private static void ValidarEspecialidad(string especialidad)

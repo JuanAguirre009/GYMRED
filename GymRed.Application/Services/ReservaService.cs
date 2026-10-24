@@ -14,20 +14,17 @@ public class ReservaService : IReservaService
     private readonly IReservaRepository _reservaRepository;
     private readonly IClienteRepository _clienteRepository;
     private readonly ISesionClaseRepository _sesionRepository;
-    private readonly IMembresiaRepository _membresiaRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public ReservaService(
         IReservaRepository reservaRepository,
         IClienteRepository clienteRepository,
         ISesionClaseRepository sesionRepository,
-        IMembresiaRepository membresiaRepository,
         IUnitOfWork unitOfWork)
     {
         _reservaRepository = reservaRepository ?? throw new ArgumentNullException(nameof(reservaRepository));
         _clienteRepository = clienteRepository ?? throw new ArgumentNullException(nameof(clienteRepository));
         _sesionRepository = sesionRepository ?? throw new ArgumentNullException(nameof(sesionRepository));
-        _membresiaRepository = membresiaRepository ?? throw new ArgumentNullException(nameof(membresiaRepository));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
@@ -55,21 +52,21 @@ public class ReservaService : IReservaService
             throw new ReglaNegocioException("El cliente no se encuentra activo.");
 
         SesionClase? sesion = await _sesionRepository.ObtenerPorIdAsync(dto.SesionClaseId)
-            ?? throw new AplicacionException("Sesi�n de clase no encontrada.");
+            ?? throw new AplicacionException("Sesion de clase no encontrada.");
 
         if (!sesion.EstaProgramada())
-            throw new ReglaNegocioException("La sesi�n no est� disponible para reservas.");
+            throw new ReglaNegocioException("La sesion no esta disponible para reservas.");
 
         if (!cliente.TieneMembresiaVigente(DateTime.UtcNow.Date))
-            throw new ReglaNegocioException("El cliente no tiene una membres�a vigente.");
+            throw new ReglaNegocioException("El cliente no tiene una membresia vigente.");
 
         bool existeReservaDuplicada = await _reservaRepository.ExisteReservaActivaAsync(dto.SesionClaseId, dto.ClienteId);
         if (existeReservaDuplicada)
-            throw new ReglaNegocioException("El cliente ya tiene una reserva activa para esta sesi�n.");
+            throw new ReglaNegocioException("El cliente ya tiene una reserva activa para esta sesion.");
 
         int reservasActivas = await _sesionRepository.ContarReservasActivasAsync(dto.SesionClaseId);
         if (!sesion.HayCuposDisponibles(reservasActivas))
-            throw new ReglaNegocioException("No hay cupos disponibles para esta sesi�n.");
+            throw new ReglaNegocioException("No hay cupos disponibles para esta sesion.");
 
         Reserva reserva = new(dto.SesionClaseId, dto.ClienteId);
         await _reservaRepository.AgregarAsync(reserva);

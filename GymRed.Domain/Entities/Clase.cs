@@ -58,6 +58,9 @@ public class Clase : IEntity
 
     public SesionClase ProgramarSesion(DateTime fechaHoraInicio, DateTime fechaHoraFin)
     {
+        if (!Activa)
+            throw new ReglaNegocioException("No se pueden programar sesiones en una clase inactiva.");
+
         SesionClase sesion = new SesionClase(Id, CapacidadMaxima, fechaHoraInicio, fechaHoraFin);
         _sesiones.Add(sesion);
         return sesion;
@@ -72,24 +75,24 @@ public class Clase : IEntity
     private static void ValidarDescripcion(string descripcion)
     {
         if (string.IsNullOrWhiteSpace(descripcion))
-            throw new DomainException("La descripci�n de la clase es obligatoria.");
+            throw new DomainException("La descripcion de la clase es obligatoria.");
     }
 
     private static void ValidarInstructorId(int instructorId)
     {
         if (instructorId <= 0)
-            throw new DomainException("El instructor de la clase no es v�lido.");
+            throw new DomainException("El instructor de la clase no es valido.");
     }
 
     private static void ValidarSedeId(int sedeId)
     {
         if (sedeId <= 0)
-            throw new DomainException("La sede de la clase no es v�lida.");
+            throw new DomainException("La sede de la clase no es valida.");
     }
 
     private static void ValidarCapacidad(int capacidadMaxima)
     {
         if (capacidadMaxima <= 0)
-            throw new DomainException("La capacidad m�xima debe ser mayor a cero.");
+            throw new DomainException("La capacidad maxima debe ser mayor a cero.");
     }
 }

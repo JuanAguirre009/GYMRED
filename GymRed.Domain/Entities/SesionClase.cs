@@ -19,7 +19,7 @@ public class SesionClase : IEntity
     public SesionClase(int claseId, int capacidadMaxima, DateTime fechaHoraInicio, DateTime fechaHoraFin)
     {
         if (claseId <= 0)
-            throw new DomainException("La clase asociada a la sesi�n no es v�lida.");
+            throw new DomainException("La clase asociada a la sesion no es valida.");
 
         ValidarCapacidad(capacidadMaxima);
         ValidarFechas(fechaHoraInicio, fechaHoraFin);
@@ -45,7 +45,7 @@ public class SesionClase : IEntity
     public void Cancelar()
     {
         if (Estado == EstadoSesionClase.Finalizada)
-            throw new ReglaNegocioException("No se puede cancelar una sesi�n ya finalizada.");
+            throw new ReglaNegocioException("No se puede cancelar una sesion ya finalizada.");
 
         Estado = EstadoSesionClase.Cancelada;
     }
@@ -53,7 +53,7 @@ public class SesionClase : IEntity
     public void Finalizar()
     {
         if (Estado == EstadoSesionClase.Cancelada)
-            throw new ReglaNegocioException("No se puede finalizar una sesi�n cancelada.");
+            throw new ReglaNegocioException("No se puede finalizar una sesion cancelada.");
 
         Estado = EstadoSesionClase.Finalizada;
     }
@@ -61,7 +61,7 @@ public class SesionClase : IEntity
     private static void ValidarCapacidad(int capacidadMaxima)
     {
         if (capacidadMaxima <= 0)
-            throw new DomainException("La capacidad de la sesi�n debe ser mayor a cero.");
+            throw new DomainException("La capacidad de la sesion debe ser mayor a cero.");
     }
 
     private static void ValidarFechas(DateTime inicio, DateTime fin)

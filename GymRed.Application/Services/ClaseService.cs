@@ -11,15 +11,21 @@ public class ClaseService : IClaseService
 {
     private readonly IClaseRepository _claseRepository;
     private readonly ISesionClaseRepository _sesionRepository;
+    private readonly IInstructorRepository _instructorRepository;
+    private readonly ISedeRepository _sedeRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public ClaseService(
         IClaseRepository claseRepository,
         ISesionClaseRepository sesionRepository,
+        IInstructorRepository instructorRepository,
+        ISedeRepository sedeRepository,
         IUnitOfWork unitOfWork)
     {
         _claseRepository = claseRepository ?? throw new ArgumentNullException(nameof(claseRepository));
         _sesionRepository = sesionRepository ?? throw new ArgumentNullException(nameof(sesionRepository));
+        _instructorRepository = instructorRepository ?? throw new ArgumentNullException(nameof(instructorRepository));
+        _sedeRepository = sedeRepository ?? throw new ArgumentNullException(nameof(sedeRepository));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
@@ -40,6 +46,12 @@ public class ClaseService : IClaseService
         if (dto is null)
             throw new AplicacionException("Los datos de la clase son obligatorios.");
 
+        Instructor? instructor = await _instructorRepository.ObtenerPorIdAsync(dto.InstructorId)
+            ?? throw new AplicacionException("El instructor asociado no existe.");
+
+        Sede? sede = await _sedeRepository.ObtenerPorIdAsync(dto.SedeId)
+            ?? throw new AplicacionException("La sede asociada no existe.");
+
         Clase clase = new(
             dto.Nombre,
             dto.Descripcion,
@@ -57,6 +69,12 @@ public class ClaseService : IClaseService
     {
         if (dto is null)
             throw new AplicacionException("Los datos de la clase son obligatorios.");
+
+        Instructor? instructor = await _instructorRepository.ObtenerPorIdAsync(dto.InstructorId)
+            ?? throw new AplicacionException("El instructor asociado no existe.");
+
+        Sede? sede = await _sedeRepository.ObtenerPorIdAsync(dto.SedeId)
+            ?? throw new AplicacionException("La sede asociada no existe.");
 
         Clase? clase = await _claseRepository.ObtenerPorIdAsync(id)
             ?? throw new AplicacionException("Clase no encontrada.");
@@ -85,7 +103,7 @@ public class ClaseService : IClaseService
     public async Task<SesionClaseDto> ProgramarSesionAsync(ProgramarSesionDto dto)
     {
         if (dto is null)
-            throw new AplicacionException("Los datos de la sesi�n son obligatorios.");
+            throw new AplicacionException("Los datos de la sesion son obligatorios.");
 
         Clase? clase = await _claseRepository.ObtenerPorIdAsync(dto.ClaseId)
             ?? throw new AplicacionException("Clase no encontrada.");

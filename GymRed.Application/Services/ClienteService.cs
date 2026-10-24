@@ -12,11 +12,16 @@ namespace GymRed.Application.Services;
 public class ClienteService : IClienteService
 {
     private readonly IClienteRepository _clienteRepository;
+    private readonly ISedeRepository _sedeRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public ClienteService(IClienteRepository clienteRepository, IUnitOfWork unitOfWork)
+    public ClienteService(
+        IClienteRepository clienteRepository,
+        ISedeRepository sedeRepository,
+        IUnitOfWork unitOfWork)
     {
         _clienteRepository = clienteRepository ?? throw new ArgumentNullException(nameof(clienteRepository));
+        _sedeRepository = sedeRepository ?? throw new ArgumentNullException(nameof(sedeRepository));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
@@ -37,9 +42,12 @@ public class ClienteService : IClienteService
         if (dto is null)
             throw new AplicacionException("Los datos del cliente son obligatorios.");
 
-        bool existe = await _clienteRepository.ExisteIdentificacionAsync(dto.NumeroIdentificacion);
-        if (existe)
-            throw new ReglaNegocioException("Ya existe un cliente con la misma identificaci�n.");
+        bool existeIdentificacion = await _clienteRepository.ExisteIdentificacionAsync(dto.NumeroIdentificacion);
+        if (existeIdentificacion)
+            throw new ReglaNegocioException("Ya existe un cliente con la misma identificacion.");
+
+        Sede? sede = await _sedeRepository.ObtenerPorIdAsync(dto.SedeId)
+            ?? throw new AplicacionException("La sede asociada no existe.");
 
         Cliente cliente = new(
             dto.Nombres,
@@ -59,7 +67,7 @@ public class ClienteService : IClienteService
     public async Task ActualizarAsync(int id, ActualizarClienteDto dto)
     {
         if (dto is null)
-            throw new AplicacionException("Los datos de actualizaci�n son obligatorios.");
+            throw new AplicacionException("Los datos de actualizacion son obligatorios.");
 
         Cliente? cliente = await _clienteRepository.ObtenerPorIdAsync(id)
             ?? throw new AplicacionException("Cliente no encontrado.");
@@ -72,7 +80,7 @@ public class ClienteService : IClienteService
     public async Task CambiarEstadoAsync(int id, string estado)
     {
         if (!Enum.TryParse<EstadoCliente>(estado, true, out EstadoCliente nuevoEstado))
-            throw new AplicacionException($"El estado '{estado}' no es v�lido.");
+            throw new AplicacionException($"El estado '{estado}' no es valido.");
 
         Cliente? cliente = await _clienteRepository.ObtenerPorIdAsync(id)
             ?? throw new AplicacionException("Cliente no encontrado.");

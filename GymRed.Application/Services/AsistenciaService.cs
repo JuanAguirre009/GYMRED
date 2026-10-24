@@ -52,14 +52,14 @@ public class AsistenciaService : IAsistenciaService
             throw new ReglaNegocioException("El cliente no se encuentra activo.");
 
         SesionClase? sesion = await _sesionRepository.ObtenerPorIdAsync(dto.SesionClaseId)
-            ?? throw new AplicacionException("Sesi�n de clase no encontrada.");
+            ?? throw new AplicacionException("Sesion de clase no encontrada.");
 
         if (sesion.Estado != EstadoSesionClase.Programada)
-            throw new ReglaNegocioException("La asistencia solo puede registrarse para una sesi�n programada.");
+            throw new ReglaNegocioException("La asistencia solo puede registrarse para una sesion programada.");
 
         bool yaRegistrada = await _asistenciaRepository.ExisteAsistenciaAsync(dto.SesionClaseId, dto.ClienteId);
         if (yaRegistrada)
-            throw new ReglaNegocioException("La asistencia del cliente ya fue registrada para esta sesi�n.");
+            throw new ReglaNegocioException("La asistencia del cliente ya fue registrada para esta sesion.");
 
         Asistencia asistencia = new(dto.SesionClaseId, dto.ClienteId, dto.Asistio);
         await _asistenciaRepository.AgregarAsync(asistencia);

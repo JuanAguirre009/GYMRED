@@ -70,8 +70,11 @@ public class Cliente : IEntity, IAggregateRoot
 
     public Membresia AsignarMembresia(Plan plan)
     {
+        if (Estado != EstadoCliente.Activo)
+            throw new ReglaNegocioException("No se puede asignar una membresia a un cliente inactivo o suspendido.");
+
         if (plan is null)
-            throw new DomainException("El plan es obligatorio para asignar una membres�a.");
+            throw new DomainException("El plan es obligatorio para asignar una membresia.");
 
         DateTime fechaInicio = DateTime.UtcNow.Date;
         Membresia membresia = new Membresia(this, plan, fechaInicio);
@@ -102,7 +105,7 @@ public class Cliente : IEntity, IAggregateRoot
     private static void ValidarIdentificacion(string numeroIdentificacion)
     {
         if (string.IsNullOrWhiteSpace(numeroIdentificacion))
-            throw new DomainException("El n�mero de identificaci�n del cliente es obligatorio.");
+            throw new DomainException("El numero de identificacion del cliente es obligatorio.");
     }
 
     private static void ValidarEmail(string email)
@@ -114,7 +117,7 @@ public class Cliente : IEntity, IAggregateRoot
     private static void ValidarTelefono(string telefono)
     {
         if (string.IsNullOrWhiteSpace(telefono))
-            throw new DomainException("El tel�fono del cliente es obligatorio.");
+            throw new DomainException("El telefono del cliente es obligatorio.");
     }
 
     private static void ValidarFechaNacimiento(DateTime fechaNacimiento)
@@ -126,6 +129,6 @@ public class Cliente : IEntity, IAggregateRoot
     private static void ValidarSedeId(int sedeId)
     {
         if (sedeId <= 0)
-            throw new DomainException("La sede asociada al cliente no es v�lida.");
+            throw new DomainException("La sede asociada al cliente no es valida.");
     }
 }

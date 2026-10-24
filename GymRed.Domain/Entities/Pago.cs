@@ -22,7 +22,7 @@ public class Pago : IEntity
     public Pago(int membresiaId, Dinero monto, MetodoPago metodoPago, string? numeroTransaccion = null)
     {
         if (membresiaId <= 0)
-            throw new DomainException("La membres�a asociada al pago no es v�lida.");
+            throw new DomainException("La membresia asociada al pago no es valida.");
 
         MembresiaId = membresiaId;
         Monto = monto ?? throw new DomainException("El monto del pago es obligatorio.");
@@ -38,7 +38,7 @@ public class Pago : IEntity
             throw new ReglaNegocioException("El pago ya se encuentra anulado.");
 
         if (string.IsNullOrWhiteSpace(motivo))
-            throw new DomainException("El motivo de anulaci�n es obligatorio.");
+            throw new DomainException("El motivo de anulacion es obligatorio.");
 
         Estado = EstadoPago.Anulado;
         MotivoAnulacion = motivo.Trim();

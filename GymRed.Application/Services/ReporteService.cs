@@ -50,7 +50,7 @@ public class ReporteService : IReporteService
             .AsReadOnly();
 
         int activas = detalle.Count(m => m.Estado == EstadoMembresia.Activa.ToString() && m.FechaFin >= fechaCorte.Date);
-        int vencidas = detalle.Count(m => m.FechaFin < fechaCorte.Date || m.Estado == EstadoMembresia.Vencida.ToString());
+        int vencidas = detalle.Count(m => m.Estado != EstadoMembresia.Cancelada.ToString() && m.FechaFin < fechaCorte.Date);
         int canceladas = detalle.Count(m => m.Estado == EstadoMembresia.Cancelada.ToString());
 
         return new ReporteMembresiasDto(fechaCorte, activas, vencidas, canceladas, detalle);
@@ -64,9 +64,8 @@ public class ReporteService : IReporteService
             .ToList()
             .AsReadOnly();
 
-        IReadOnlyCollection<SesionClase> sesiones = await _sesionRepository.ObtenerProgramadasAsync(null);
-        int totalSesiones = sesiones.Count(s => s.FechaHoraInicio.Date >= inicio.Date && s.FechaHoraInicio.Date <= fin.Date);
+        IReadOnlyCollection<SesionClase> sesiones = await _sesionRepository.ObtenerPorRangoFechasAsync(inicio, fin);
 
-        return new ReporteAsistenciaDto(inicio, fin, detalle.Count, totalSesiones, detalle);
+        return new ReporteAsistenciaDto(inicio, fin, detalle.Count, sesiones.Count, detalle);
     }
 }

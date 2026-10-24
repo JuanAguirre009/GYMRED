@@ -57,13 +57,13 @@ public class Sede : IEntity, IAggregateRoot
     private static void ValidarDireccion(string direccion)
     {
         if (string.IsNullOrWhiteSpace(direccion))
-            throw new DomainException("La direcci�n de la sede es obligatoria.");
+            throw new DomainException("La direccion de la sede es obligatoria.");
     }
 
     private static void ValidarTelefono(string telefono)
     {
         if (string.IsNullOrWhiteSpace(telefono))
-            throw new DomainException("El tel�fono de la sede es obligatorio.");
+            throw new DomainException("El telefono de la sede es obligatorio.");
     }
 
     private static void ValidarEmail(string email)

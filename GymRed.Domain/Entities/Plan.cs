@@ -59,13 +59,13 @@ public class Plan : IEntity
     private static void ValidarDescripcion(string descripcion)
     {
         if (string.IsNullOrWhiteSpace(descripcion))
-            throw new DomainException("La descripci�n del plan es obligatoria.");
+            throw new DomainException("La descripcion del plan es obligatoria.");
     }
 
     private static void ValidarDuracion(int duracionDias)
     {
         if (duracionDias <= 0)
-            throw new DomainException("La duraci�n del plan debe ser mayor a cero d�as.");
+            throw new DomainException("La duracion del plan debe ser mayor a cero dias.");
     }
 
     private static void ValidarBeneficios(string beneficios)

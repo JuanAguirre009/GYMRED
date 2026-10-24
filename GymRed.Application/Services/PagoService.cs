@@ -46,10 +46,10 @@ public class PagoService : IPagoService
             throw new AplicacionException("Los datos del pago son obligatorios.");
 
         Membresia? membresia = await _membresiaRepository.ObtenerPorIdAsync(dto.MembresiaId)
-            ?? throw new AplicacionException("Membres�a no encontrada.");
+            ?? throw new AplicacionException("Membresia no encontrada.");
 
         if (!Enum.TryParse<MetodoPago>(dto.MetodoPago, true, out MetodoPago metodo))
-            throw new AplicacionException($"El m�todo de pago '{dto.MetodoPago}' no es v�lido.");
+            throw new AplicacionException($"El metodo de pago '{dto.MetodoPago}' no es valido.");
 
         Pago pago = membresia.RegistrarPago(new Dinero(dto.Monto, dto.Moneda), metodo, dto.NumeroTransaccion);
         await _pagoRepository.AgregarAsync(pago);

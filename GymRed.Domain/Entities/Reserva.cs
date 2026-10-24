@@ -19,10 +19,10 @@ public class Reserva : IEntity
     public Reserva(int sesionClaseId, int clienteId)
     {
         if (sesionClaseId <= 0)
-            throw new DomainException("La sesi�n de clase no es v�lida.");
+            throw new DomainException("La sesion de clase no es valida.");
 
         if (clienteId <= 0)
-            throw new DomainException("El cliente de la reserva no es v�lido.");
+            throw new DomainException("El cliente de la reserva no es valido.");
 
         SesionClaseId = sesionClaseId;
         ClienteId = clienteId;
@@ -33,7 +33,7 @@ public class Reserva : IEntity
     public void Cancelar()
     {
         if (Estado == EstadoReserva.Cancelada)
-            throw new ReglaNegocioException("La reserva ya est� cancelada.");
+            throw new ReglaNegocioException("La reserva ya esta cancelada.");
 
         if (Estado == EstadoReserva.Cumplida)
             throw new ReglaNegocioException("No se puede cancelar una reserva ya cumplida.");

@@ -25,10 +25,10 @@ public class Membresia : IEntity
     public Membresia(Cliente cliente, Plan plan, DateTime fechaInicio)
     {
         if (cliente is null)
-            throw new DomainException("El cliente de la membres�a es obligatorio.");
+            throw new DomainException("El cliente de la membresia es obligatorio.");
 
         if (plan is null)
-            throw new DomainException("El plan de la membres�a es obligatorio.");
+            throw new DomainException("El plan de la membresia es obligatorio.");
 
         if (!plan.Activo)
             throw new ReglaNegocioException("No se puede asignar un plan inactivo.");
@@ -63,7 +63,7 @@ public class Membresia : IEntity
     public void Cancelar()
     {
         if (Estado == EstadoMembresia.Vencida)
-            throw new ReglaNegocioException("No se puede cancelar una membres�a ya vencida.");
+            throw new ReglaNegocioException("No se puede cancelar una membresia ya vencida.");
 
         Estado = EstadoMembresia.Cancelada;
     }
@@ -71,7 +71,7 @@ public class Membresia : IEntity
     public Pago RegistrarPago(Dinero monto, MetodoPago metodoPago, string? numeroTransaccion = null)
     {
         if (Estado == EstadoMembresia.Cancelada)
-            throw new ReglaNegocioException("No se pueden registrar pagos en una membres�a cancelada.");
+            throw new ReglaNegocioException("No se pueden registrar pagos en una membresia cancelada.");
 
         Pago pago = new Pago(Id, monto, metodoPago, numeroTransaccion);
         _pagos.Add(pago);
